@@ -12,20 +12,23 @@ public class Testing : MonoBehaviour
     public Transform[] points;
 
     [HideInInspector]
-    public Vector3 nexPoint;
+    public Vector3 nextPoint;
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+
     }
 
     private void Start()
     {
         tree = new Sequence(new FindDestination(this),
-                            new MoveTo(this));
+                            new LookAtDestination(this),
+                            new MoveToDestination(this),
+                            new ReachedDestination(this));
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         tree.Tick();
     }

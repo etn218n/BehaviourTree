@@ -24,7 +24,7 @@ public class FindDestination : Leaf<Testing>
         if (currentIndex >= desPoint.Count)
             currentIndex = 0;
 
-        context.nexPoint = desPoint[currentIndex];
+        context.nextPoint = desPoint[currentIndex];
 
         Debug.Log(desPoint[currentIndex]);
 
@@ -34,19 +34,43 @@ public class FindDestination : Leaf<Testing>
     }
 }
 
-public class MoveTo : Leaf<Testing>
+public class MoveToDestination : Leaf<Testing>
 {
-    public MoveTo(Testing a) : base(a)
+    public MoveToDestination(Testing a) : base(a)
     {
     }
 
     public override NodeStatus Tick()
     {
-        context.rb2d.velocity = (context.nexPoint - context.transform.position).normalized * Time.deltaTime * 200;
+        context.rb2d.velocity = context.transform.up * Time.deltaTime * 200;
 
-        if (Vector2.Distance(context.transform.position, context.nexPoint) < 0.1f)
+        return NodeStatus.Sucess;
+    }
+}
+
+public class LookAtDestination : Leaf<Testing>
+{
+    public LookAtDestination(Testing a) : base(a) { }
+
+    public override NodeStatus Tick()
+    {
+        Vector2 lookAt = (context.nextPoint - context.transform.position).normalized;
+
+        context.transform.up = lookAt;
+
+        return NodeStatus.Sucess;
+    }
+}
+
+public class ReachedDestination : Leaf<Testing>
+{
+    public ReachedDestination(Testing a) : base(a) { }
+
+    public override NodeStatus Tick()
+    {
+        if (Vector2.Distance(context.transform.position, context.nextPoint) < 0.1f)
         {
-            context.rb2d.MovePosition(context.nexPoint);
+            context.rb2d.MovePosition(context.nextPoint);
             return NodeStatus.Sucess;
         }
 
