@@ -64,7 +64,7 @@ public class MoveToDestination : Leaf<AIContext>
 
         context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.moveSpeed;
 
-        if (Vector2.Distance(context.transform.position, context.nextPoint) < 0.1f)
+        if (Vector2.Distance(context.transform.position, context.nextPoint) < 0.2f)
         {
             context.rb2d.MovePosition(context.nextPoint);
             return NodeStatus.Sucess;
