@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AI : MonoBehaviour
 {
@@ -26,9 +24,11 @@ public class AI : MonoBehaviour
                                   new SteerAtTarget(ai),
                                   new ChaseTarget(ai)),
 
-                     new Sequence(new FindDestination(ai),
-                                  new SteerAtDestination(ai),
-                                  new MoveToDestination(ai)));
+                     new Selector(new Sequence(new IfReachDestination(ai),
+                                               new FindNextDestination(ai)),
+
+                                  new Sequence(new SteerAtDestination(ai),
+                                               new MoveToDestination(ai))));
     }
 
     private void FixedUpdate()

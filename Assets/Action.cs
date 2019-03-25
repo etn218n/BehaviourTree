@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-public class FindDestination : Leaf<AIContext>
+public class FindNextDestination : Leaf<AIContext>
 {
     private int currentIndex = 0;
 
-    public FindDestination(AIContext ai) : base(ai) { }
+    public FindNextDestination(AIContext ai) : base(ai)
+    {
+        context.nextPoint = context.patrolPoints[0];
+    }
 
     public override NodeStatus Tick()
     {
@@ -14,15 +16,29 @@ public class FindDestination : Leaf<AIContext>
         if (currentIndex >= context.patrolPoints.Length)
             currentIndex = 0;
 
-        context.nextPoint = context.patrolPoints[currentIndex].position;
+        context.nextPoint = context.patrolPoints[currentIndex];
 
         currentIndex++;
 
-        Vector2 lookAt = (context.nextPoint - context.transform.position).normalized;
-
-        context.lookAt = lookAt;
-
         return NodeStatus.Sucess;
+    }
+}
+
+public class IfReachDestination : Leaf<AIContext>
+{
+    public IfReachDestination(AIContext ai) : base(ai) { }
+
+    public override NodeStatus Tick()
+    {
+        Debug.Log("Reached Point");
+
+        if (Vector2.Distance(context.transform.position, context.nextPoint.position) < 0.2f)
+        {
+            context.rb2d.MovePosition(context.nextPoint.position);
+            return NodeStatus.Sucess;
+        }
+
+        return NodeStatus.Failure;
     }
 }
 
@@ -32,9 +48,11 @@ public class SteerAtDestination : Leaf<AIContext>
 
     public override NodeStatus Tick()
     {
-        context.transform.up = context.lookAt;
-
         Debug.Log("Steer Point");
+
+        Vector2 lookAt = (context.nextPoint.position - context.transform.position).normalized;
+
+        context.transform.up = lookAt;
 
         return NodeStatus.Sucess;
     }
@@ -50,18 +68,7 @@ public class MoveToDestination : Leaf<AIContext>
 
         context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.moveSpeed;
 
-        if (Vector2.Distance(context.transform.position, context.nextPoint) < 0.2f)
-        {
-            context.rb2d.MovePosition(context.nextPoint);
-            return NodeStatus.Sucess;
-        }
-
-        if (context.sight.collision != null)
-        {
-            return NodeStatus.Sucess;
-        }
-
-        return NodeStatus.Running;
+        return NodeStatus.Sucess;
     }
 }
 
@@ -96,9 +103,7 @@ public class SteerAtTarget : Leaf<AIContext>
 
         Vector2 lookAt = (context.target.position - context.transform.position).normalized;
 
-        context.lookAt = lookAt;
-
-        context.transform.up = context.lookAt;
+        context.transform.up = lookAt;
 
         return NodeStatus.Sucess;
     }
@@ -110,9 +115,9 @@ public class ChaseTarget : Leaf<AIContext>
 
     public override NodeStatus Tick()
     {
-        Debug.Log("Chase");
+        Debug.Log("Chase Target");
 
-        context.rb2d.velocity = (context.target.position - context.transform.position).normalized * Time.fixedDeltaTime * context.chaseSpeed;
+        context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.chaseSpeed;
 
         return NodeStatus.Sucess;
     }

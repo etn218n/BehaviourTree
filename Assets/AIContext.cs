@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 [Serializable]
@@ -11,13 +9,12 @@ public class AIContext
     public Rigidbody2D rb2d         { get; private set; }
     public Sight       sight        { get; private set; }
 
-    public Vector3 nextPoint { get; set; }
-    public Vector3 lookAt    { get; set; }
+    public Transform nextPoint { get; set; }
 
     public Transform target  { get; set; }
 
-    [Range(0, 200)] public float moveSpeed  = 75f;
-    [Range(0, 200)] public float chaseSpeed = 35f;
+    [Range(0, 200)] public float moveSpeed  = 100f;
+    [Range(0, 200)] public float chaseSpeed = 150f;
     [Range(0, 200)] public float steerSpeed = 50f;
 
     public AIContext(Rigidbody2D rb2d, 

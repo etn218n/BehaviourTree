@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Selector : INode
+﻿public class Selector : INode
 {
     private readonly INode[] nodes;
     private int currentIndex;

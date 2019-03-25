@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public class Sequence : INode
+﻿public class Sequence : INode
 {
     private readonly INode[] nodes;
     private int currentIndex;
