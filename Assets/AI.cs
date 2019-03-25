@@ -19,11 +19,14 @@ public class AI : MonoBehaviour
 
     private void Start()
     {
+
         tree = new Selector(
                      new Sequence(new TargetSighted(ai),
                                   new SteerAtTarget(ai),
-                                  new ChaseTarget(ai)),
-
+                                  new Selector(new Sequence(new InAttackRange(ai),
+                                                            new AttackTarget(ai)),
+                                               new ChaseTarget(ai))),
+                     
                      new Selector(new Sequence(new IfReachDestination(ai),
                                                new FindNextDestination(ai)),
 

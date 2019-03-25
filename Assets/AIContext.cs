@@ -10,12 +10,12 @@ public class AIContext
     public Sight       sight        { get; private set; }
 
     public Transform nextPoint { get; set; }
+    public Transform target    { get; set; }
 
-    public Transform target  { get; set; }
-
-    [Range(0, 200)] public float moveSpeed  = 100f;
-    [Range(0, 200)] public float chaseSpeed = 150f;
-    [Range(0, 200)] public float steerSpeed = 50f;
+    [Range(0f, 200f)] public float moveSpeed   = 100f;
+    [Range(0f, 200f)] public float chaseSpeed  = 150f;
+    [Range(0f, 200f)] public float steerSpeed  = 50f;
+    [Range(0f, 2f)]   public float attackRange = 1f;
 
     public AIContext(Rigidbody2D rb2d, 
                      Transform transform, 
