@@ -3,32 +3,18 @@ using System.Collections.Generic;
 
 public class FindDestination : Leaf<AIContext>
 {
-    private Transform subjectTransform;
-
-    private List<Vector3> desPoint = new List<Vector3>();
-
     private int currentIndex = 0;
 
-    public FindDestination(AIContext ai) : base(ai)
-    {
-        subjectTransform = context.transform;
-
-        foreach (var point in context.patrolPoints)
-        {
-            desPoint.Add(point.position);
-        }
-    }
+    public FindDestination(AIContext ai) : base(ai) { }
 
     public override NodeStatus Tick()
     {
-        Debug.Log("Find");
+        Debug.Log("Find Point");
 
-        if (currentIndex >= desPoint.Count)
+        if (currentIndex >= context.patrolPoints.Length)
             currentIndex = 0;
 
-        context.nextPoint = desPoint[currentIndex];
-
-        //Debug.Log(desPoint[currentIndex]);
+        context.nextPoint = context.patrolPoints[currentIndex].position;
 
         currentIndex++;
 
@@ -48,7 +34,7 @@ public class SteerAtDestination : Leaf<AIContext>
     {
         context.transform.up = context.lookAt;
 
-        Debug.Log("Steer");
+        Debug.Log("Steer Point");
 
         return NodeStatus.Sucess;
     }
@@ -60,7 +46,7 @@ public class MoveToDestination : Leaf<AIContext>
 
     public override NodeStatus Tick()
     {
-        Debug.Log("Move");
+        Debug.Log("Move to Point");
 
         context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.moveSpeed;
 
@@ -100,6 +86,24 @@ public class TargetSighted : Leaf<AIContext>
     }
 }
 
+public class SteerAtTarget : Leaf<AIContext>
+{
+    public SteerAtTarget(AIContext ai) : base(ai) { }
+
+    public override NodeStatus Tick()
+    {
+        Debug.Log("Steer Target");
+
+        Vector2 lookAt = (context.target.position - context.transform.position).normalized;
+
+        context.lookAt = lookAt;
+
+        context.transform.up = context.lookAt;
+
+        return NodeStatus.Sucess;
+    }
+}
+
 public class ChaseTarget : Leaf<AIContext>
 {
     public ChaseTarget(AIContext ai) : base(ai) { }
@@ -108,13 +112,8 @@ public class ChaseTarget : Leaf<AIContext>
     {
         Debug.Log("Chase");
 
-        if (context.sight.collision == null)
-        {
-            return NodeStatus.Failure;
-        }
-
         context.rb2d.velocity = (context.target.position - context.transform.position).normalized * Time.fixedDeltaTime * context.chaseSpeed;
 
-        return NodeStatus.Running;
+        return NodeStatus.Sucess;
     }
 }

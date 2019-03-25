@@ -28,6 +28,7 @@ public class AI : MonoBehaviour
         tree = new Selector(
 
             new Sequence(new TargetSighted(ai),
+                         new SteerAtTarget(ai),
                          new ChaseTarget(ai)),
 
             new Sequence(new FindDestination(ai),
