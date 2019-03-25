@@ -14,7 +14,10 @@ public class AIContext
     public Vector3 nextPoint { get; set; }
     public Vector3 lookAt    { get; set; }
 
-    [Range(0, 200)] public float moveSpeed  = 50f;
+    public Transform target  { get; set; }
+
+    [Range(0, 200)] public float moveSpeed  = 75f;
+    [Range(0, 200)] public float chaseSpeed = 35f;
     [Range(0, 200)] public float steerSpeed = 50f;
 
     public AIContext(Rigidbody2D rb2d, 

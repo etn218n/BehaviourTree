@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
-    private Sequence tree;
+    private Selector tree;
 
     private Rigidbody2D rb2d;
     private Transform transform;
@@ -25,10 +25,14 @@ public class AI : MonoBehaviour
 
     private void Start()
     {
-        tree = new Sequence(new FindDestination(ai),
-                            new SteerAtDestination(ai),
-                            new MoveToDestination(ai)
-                            );
+        tree = new Selector(
+
+            new Sequence(new TargetSighted(ai),
+                         new ChaseTarget(ai)),
+
+            new Sequence(new FindDestination(ai),
+                         new SteerAtDestination(ai),
+                         new MoveToDestination(ai)));
     }
 
     private void FixedUpdate()

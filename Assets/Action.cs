@@ -72,11 +72,48 @@ public class MoveToDestination : Leaf<AIContext>
 
         if (context.sight.collision != null)
         {
-            if (context.sight.collision.tag == "WorldObject")
+            return NodeStatus.Sucess;
+        }
+
+        return NodeStatus.Running;
+    }
+}
+
+public class TargetSighted : Leaf<AIContext>
+{
+    public TargetSighted(AIContext ai) : base(ai) { }
+
+    public override NodeStatus Tick()
+    {
+        Debug.Log("Target Sighted");
+
+        if (context.sight.collision != null)
+        {
+            if (context.sight.collision.tag == "Target")
             {
+                context.target = context.sight.collision.transform;
                 return NodeStatus.Sucess;
             }
         }
+
+        return NodeStatus.Failure;
+    }
+}
+
+public class ChaseTarget : Leaf<AIContext>
+{
+    public ChaseTarget(AIContext ai) : base(ai) { }
+
+    public override NodeStatus Tick()
+    {
+        Debug.Log("Chase");
+
+        if (context.sight.collision == null)
+        {
+            return NodeStatus.Failure;
+        }
+
+        context.rb2d.velocity = (context.target.position - context.transform.position).normalized * Time.fixedDeltaTime * context.chaseSpeed;
 
         return NodeStatus.Running;
     }
