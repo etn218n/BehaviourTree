@@ -6,6 +6,8 @@ public class TargetSighted : Leaf<AIContext>
 
     public override NodeStatus Tick()
     {
+        context.sight.transform.localScale = new Vector2(context.sightScaleX, context.sightScaleY);
+
         if (context.sight.collision != null)
         {
             if (context.sight.collision.tag == "Target")

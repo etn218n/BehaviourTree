@@ -14,8 +14,10 @@ public class AIContext
 
     [Range(0f, 200f)] public float moveSpeed   = 100f;
     [Range(0f, 200f)] public float chaseSpeed  = 150f;
-    [Range(0f, 200f)] public float steerSpeed  = 50f;
-    [Range(0f, 2f)]   public float attackRange = 1f;
+    [Range(0f, 2f)  ] public float attackRange = 1f;
+
+    [Range(0f, 5f)  ] public float sightScaleX = 2f;
+    [Range(0f, 5f)  ] public float sightScaleY = 2f;
 
     public AIContext(Rigidbody2D rb2d, 
                      Transform transform, 
