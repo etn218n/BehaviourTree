@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using NSubstitute;
 
 namespace Tests
 {
@@ -11,7 +12,6 @@ namespace Tests
         [Test]
         public void Sequence_SucessWhenAllNodeSucess()
         {
-            
         }
     }
 }
