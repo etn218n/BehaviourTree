@@ -60,6 +60,31 @@ public class MoveToDestination : Leaf<AIContext>
     {
         context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.moveSpeed;
 
+        if (context.sight.collision != null)
+        {
+            if (context.sight.collision.tag == "WorldObject")
+            {
+                Debug.Log("Hit");
+                return NodeStatus.Failure;
+            }
+        }
+
         return NodeStatus.Sucess;
+    }
+}
+
+public class IfPathObstructed : Leaf<AIContext>
+{
+    public IfPathObstructed(AIContext ai) : base(ai) { }
+
+    public override NodeStatus Tick()
+    {
+        if (context.sight.collision != null)
+        {
+            if (context.sight.collision.tag == "WorldObject")
+                return NodeStatus.Sucess;
+        }
+
+        return NodeStatus.Failure;
     }
 }

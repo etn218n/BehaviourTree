@@ -68,6 +68,8 @@ public class AttackTarget : Leaf<AIContext>
 
     public override NodeStatus Tick()
     {
+        context.rb2d.velocity = Vector2.zero;
+
         Object.Destroy(context.target.gameObject);
 
         return NodeStatus.Sucess;

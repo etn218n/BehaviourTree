@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WorldObject
   - Target
+  - Bullet
   layers:
   - Default
   - TransparentFX

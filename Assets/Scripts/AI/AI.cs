@@ -2,40 +2,42 @@
 
 public class AI : MonoBehaviour
 {
-    private Selector tree;
+    [SerializeField] private Sight sight;
+    [SerializeField] private AIContext aiCtx;
+    [SerializeField] private GameObject bullet;
+
+    private INode root;
 
     public Transform[] patrolPoints;
 
-    [SerializeField] private Sight sight;
-    [SerializeField] private AIContext ai;
-
     private void Awake()
     {
-        ai = new AIContext(GetComponent<Rigidbody2D>(), 
-                           transform, 
-                           sight, 
-                           patrolPoints);
+        aiCtx = new AIContext(GetComponent<Rigidbody2D>(), 
+                              transform, 
+                              sight, 
+                              patrolPoints);
     }
 
     private void Start()
     {
+        root = new Selector(
+                     new Sequence(new TargetSighted(aiCtx),
+                                  new SteerAtTarget(aiCtx),
+                                  new Selector(new Sequence(new InAttackRange(aiCtx),
+                                                            new AttackTarget(aiCtx)),
+                                               new ChaseTarget(aiCtx))),
 
-        tree = new Selector(
-                     new Sequence(new TargetSighted(ai),
-                                  new SteerAtTarget(ai),
-                                  new Selector(new Sequence(new InAttackRange(ai),
-                                                            new AttackTarget(ai)),
-                                               new ChaseTarget(ai))),
-                     
-                     new Selector(new Sequence(new IfReachDestination(ai),
-                                               new FindNextDestination(ai)),
+                     new Selector(new Sequence(new Selector(new IfPathObstructed(aiCtx),
+                                                            new IfReachDestination(aiCtx)),
+                                               new FindNextDestination(aiCtx),
+                                               new SteerAtDestination(aiCtx)),
 
-                                  new Sequence(new SteerAtDestination(ai),
-                                               new MoveToDestination(ai))));
+                                  new Sequence(new SteerAtDestination(aiCtx),
+                                               new MoveToDestination(aiCtx))));
     }
 
     private void FixedUpdate()
     {
-        tree.Tick();
+        root.Tick();
     }
 }
