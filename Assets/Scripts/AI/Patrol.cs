@@ -30,7 +30,6 @@ public class IfReachDestination : Leaf<AIContext>
     {
         if (Vector2.Distance(context.transform.position, context.nextPoint.position) < 0.2f)
         {
-            context.rb2d.MovePosition(context.nextPoint.position);
             return NodeStatus.Sucess;
         }
 
@@ -64,7 +63,6 @@ public class MoveToDestination : Leaf<AIContext>
         {
             if (context.sight.collision.tag == "WorldObject")
             {
-                Debug.Log("Hit");
                 return NodeStatus.Failure;
             }
         }
