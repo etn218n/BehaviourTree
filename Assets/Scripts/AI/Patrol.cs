@@ -71,7 +71,8 @@ public class IfPathObstructed : Leaf<AIContext>
 
     public override NodeStatus Tick()
     {
-        RaycastHit2D hit = Physics2D.Raycast(context.transform.position, context.transform.up, 3f, layerMask);
+        //RaycastHit2D hit = Physics2D.Raycast(context.transform.position, context.transform.up, 3f, layerMask);
+        RaycastHit2D hit = Physics2D.CircleCast(context.transform.position, 1f, context.transform.up, 2f, layerMask);
 
         if (hit.collider != null)
         {
