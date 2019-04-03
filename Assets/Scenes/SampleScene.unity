@@ -1202,7 +1202,7 @@ GameObject:
   - component: {fileID: 1992086474}
   - component: {fileID: 1992086473}
   - component: {fileID: 1992086472}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: WorldObject
   m_Icon: {fileID: 0}
@@ -1291,7 +1291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992086471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.05, y: 1.79, z: 0}
+  m_LocalPosition: {x: 1.47, y: 3.19, z: 0}
   m_LocalScale: {x: 3, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1381,12 +1381,12 @@ PrefabInstance:
     - target: {fileID: 5300474574559926313, guid: f0cd64b8ee209c14186ddc7beafd7d16,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.85
+      value: -2.35
       objectReference: {fileID: 0}
     - target: {fileID: 5300474574559926313, guid: f0cd64b8ee209c14186ddc7beafd7d16,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.14
+      value: -2.61
       objectReference: {fileID: 0}
     - target: {fileID: 5300474574559926313, guid: f0cd64b8ee209c14186ddc7beafd7d16,
         type: 3}
@@ -1504,11 +1504,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 813449254026881789, guid: 547768ea91b64b04c91bc6d0618c489e,
         type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 813449254026881789, guid: 547768ea91b64b04c91bc6d0618c489e,
-        type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1436752999}
@@ -1537,11 +1532,5 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[5]
       value: 
       objectReference: {fileID: 458897731}
-    - target: {fileID: 813449254026881789, guid: 547768ea91b64b04c91bc6d0618c489e,
-        type: 3}
-      propertyPath: bullet
-      value: 
-      objectReference: {fileID: 4842586745447698087, guid: df17182d1f1d7234894708068a83fbdb,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 547768ea91b64b04c91bc6d0618c489e, type: 3}

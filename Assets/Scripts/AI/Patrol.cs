@@ -59,28 +59,23 @@ public class MoveToDestination : Leaf<AIContext>
     {
         context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.moveSpeed;
 
-        if (context.sight.collision != null)
-        {
-            if (context.sight.collision.tag == "WorldObject")
-            {
-                return NodeStatus.Failure;
-            }
-        }
-
         return NodeStatus.Sucess;
     }
 }
 
 public class IfPathObstructed : Leaf<AIContext>
 {
+    int layerMask = 1 << LayerMask.NameToLayer("WorldObject");
+
     public IfPathObstructed(AIContext ai) : base(ai) { }
 
     public override NodeStatus Tick()
     {
-        if (context.sight.collision != null)
+        RaycastHit2D hit = Physics2D.Raycast(context.transform.position, context.transform.up, 3f, layerMask);
+
+        if (hit.collider != null)
         {
-            if (context.sight.collision.tag == "WorldObject")
-                return NodeStatus.Sucess;
+            return NodeStatus.Sucess;
         }
 
         return NodeStatus.Failure;

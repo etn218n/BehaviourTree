@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 813449254026881789}
   m_Layer: 0
   m_Name: Bot
-  m_TagString: Untagged
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,17 +132,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dfc152bc26a84c4fa327cb9ff9a5029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   sight: {fileID: 1919451105278438477}
-  ai:
+  aiCtx:
     moveSpeed: 0
     chaseSpeed: 0
     attackRange: 0
     sightScaleX: 0
     sightScaleY: 0
+  bullet: {fileID: 4842586745447698087, guid: df17182d1f1d7234894708068a83fbdb, type: 3}
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7025547503700110983
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +161,7 @@ GameObject:
   - component: {fileID: 1919451105278438477}
   m_Layer: 0
   m_Name: Sight
-  m_TagString: Untagged
+  m_TagString: Sight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
