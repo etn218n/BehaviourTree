@@ -8,8 +8,7 @@
     {
         NodeStatus status = child.Tick();
 
-        if (status == NodeStatus.Running)
-            return NodeStatus.Running;
+        if (status == NodeStatus.Running) return NodeStatus.Running;
 
         return NodeStatus.Sucess;
     }

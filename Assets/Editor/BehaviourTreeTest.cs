@@ -79,6 +79,29 @@ namespace Tests
         }
 
         [Test]
+        public void Selector_FailureWhenAllChildFailure()
+        {
+            INode node1 = Substitute.For<INode>();
+            INode node2 = Substitute.For<INode>();
+            INode node3 = Substitute.For<INode>();
+
+            node1.Tick().Returns(NodeStatus.Failure);
+            node2.Tick().Returns(NodeStatus.Failure);
+            node3.Tick().Returns(NodeStatus.Failure);
+
+            Selector selector = new Selector(node1, node2, node3);
+
+            NodeStatus status = selector.Tick();
+
+            while (status == NodeStatus.Running)
+            {
+                status = selector.Tick();
+            }
+
+            Assert.AreEqual(NodeStatus.Failure, status);
+        }
+
+        [Test]
         public void Succeeder_SucessWhenChildFailure()
         {
             INode node = Substitute.For<INode>();
@@ -88,6 +111,18 @@ namespace Tests
             Succeeder succeeder = new Succeeder(node);
 
             Assert.AreEqual(NodeStatus.Sucess, succeeder.Tick());
+        }
+
+        [Test]
+        public void Inverter_FailureWhenChildSucess()
+        {
+            INode node = Substitute.For<INode>();
+
+            node.Tick().Returns(NodeStatus.Sucess);
+
+            Inverter inverter = new Inverter(node);
+
+            Assert.AreEqual(NodeStatus.Failure, inverter.Tick());
         }
     }
 }
