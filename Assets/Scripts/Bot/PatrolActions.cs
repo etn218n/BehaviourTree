@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
-public class FindNextDestination : Leaf<AIContext>
+public class FindNextDestination : Leaf<BotContext>
 {
     private int currentIndex = 0;
 
-    public FindNextDestination(AIContext ai) : base(ai)
+    public FindNextDestination(BotContext ctx) : base(ctx)
     {
-        context.nextPoint = context.patrolPoints[0];
+        int index = Random.Range(0, context.patrolPoints.Length - 1);
+        context.nextPoint = context.patrolPoints[index];
     }
 
     public override NodeStatus Tick()
@@ -22,9 +23,9 @@ public class FindNextDestination : Leaf<AIContext>
     }
 }
 
-public class IfReachDestination : Leaf<AIContext>
+public class IfReachDestination : Leaf<BotContext>
 {
-    public IfReachDestination(AIContext ai) : base(ai) { }
+    public IfReachDestination(BotContext ctx) : base(ctx) { }
 
     public override NodeStatus Tick()
     {
@@ -37,9 +38,9 @@ public class IfReachDestination : Leaf<AIContext>
     }
 }
 
-public class SteerAtDestination : Leaf<AIContext>
+public class SteerAtDestination : Leaf<BotContext>
 {
-    public SteerAtDestination(AIContext ai) : base(ai) { }
+    public SteerAtDestination(BotContext ctx) : base(ctx) { }
 
     public override NodeStatus Tick()
     {
@@ -51,28 +52,30 @@ public class SteerAtDestination : Leaf<AIContext>
     }
 }
 
-public class MoveToDestination : Leaf<AIContext>
+public class MoveToDestination : Leaf<BotContext>
 {
-    public MoveToDestination(AIContext ai) : base(ai) { }
+    public MoveToDestination(BotContext ctx) : base(ctx) { }
 
     public override NodeStatus Tick()
     {
-        context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.moveSpeed;
+        context.rb2d.velocity = context.transform.up * Time.fixedDeltaTime * context.stat.MoveSpeed;
 
         return NodeStatus.Sucess;
     }
 }
 
-public class IfPathObstructed : Leaf<AIContext>
+public class IfPathObstructed : Leaf<BotContext>
 {
-    int layerMask = 1 << LayerMask.NameToLayer("WorldObject");
+    private int layerMask = 0;
 
-    public IfPathObstructed(AIContext ai) : base(ai) { }
+    public IfPathObstructed(BotContext ctx) : base(ctx)
+    {
+        layerMask |= (1 << LayerMask.NameToLayer("WorldObject"));
+    }
 
     public override NodeStatus Tick()
     {
-        //RaycastHit2D hit = Physics2D.Raycast(context.transform.position, context.transform.up, 3f, layerMask);
-        RaycastHit2D hit = Physics2D.CircleCast(context.transform.position, 1f, context.transform.up, 2f, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, layerMask);
 
         if (hit.collider != null)
         {

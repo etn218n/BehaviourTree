@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6817464098380209078}
   - component: {fileID: 283994987410173390}
   - component: {fileID: 813449254026881789}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bot
   m_TagString: AI
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 5857184952352006998}
   - component: {fileID: 1020348901767034941}
   - component: {fileID: 1919451105278438477}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sight
   m_TagString: Sight
   m_Icon: {fileID: 0}
