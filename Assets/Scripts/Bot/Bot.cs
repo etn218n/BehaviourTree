@@ -28,7 +28,8 @@ public class Bot : MonoBehaviour
                                                MoveSpeed: 100f, 
                                                ChaseSpeed: 150f, 
                                                AttackRange: 3f, 
-                                               ViewRange: 4f,
+                                               AlertRange: 5f,
+                                               ViewRange: 2f,
                                                LayerMask: layerMask,
                                                FriendTag: "Red",
                                                EnemyTag: "Blue"); break;
@@ -37,7 +38,8 @@ public class Bot : MonoBehaviour
                                                MoveSpeed: 100f,
                                                ChaseSpeed: 150f,
                                                AttackRange: 3f,
-                                               ViewRange: 4f,
+                                               AlertRange: 5f,
+                                               ViewRange: 2f,
                                                LayerMask: layerMask,
                                                FriendTag: "Blue",
                                                EnemyTag: "Red"); break;

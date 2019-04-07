@@ -6,7 +6,7 @@ public class TargetSighted : Leaf<BotContext>
 
     public override NodeStatus Tick()
     {
-        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, context.stat.LayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.AlertRange, context.stat.LayerMask);
 
         if (hit.collider != null)
         {
@@ -74,13 +74,12 @@ public class AttackTarget : Leaf<BotContext>
 
     public override NodeStatus Tick()
     {
-        context.rb2d.velocity = Vector2.zero;
-
         GameObject newBullet = GameObject.Instantiate(context.bullet);
 
         newBullet.transform.position = context.aim.position;
         newBullet.transform.right    = context.transform.up;
 
+        //TODO: implement Weapon interface
         Vector3 shootDir = new Vector3(Random.Range(-1f, 1f), 0f, 0f) + context.transform.up;
 
         newBullet.GetComponent<Rigidbody2D>().AddForce(shootDir * 20f, ForceMode2D.Impulse);
@@ -95,7 +94,12 @@ public class MoveWhileAttacking : Leaf<BotContext>
 
     public override NodeStatus Tick()
     {
-        context.rb2d.velocity = context.transform.right * 100f * Time.fixedDeltaTime;
+        int randomValue = Random.Range(0, 2);
+
+        if (randomValue < 1)
+            context.rb2d.velocity =  context.transform.right * 100f * Time.fixedDeltaTime;
+        else
+            context.rb2d.velocity = -context.transform.right * 100f * Time.fixedDeltaTime;
 
         return NodeStatus.Sucess;
     }

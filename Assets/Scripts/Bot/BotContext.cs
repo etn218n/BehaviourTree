@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
+//TODO: better implementation
 [Serializable]
 public class BotContext
 {
@@ -53,6 +54,7 @@ public class BotStat
     public float MoveSpeed   { get; private set; }
     public float ChaseSpeed  { get; private set; }
     public float AttackRange { get; private set; }
+    public float AlertRange  { get; private set; }
     public float ViewRange   { get; private set; }
 
     public string FriendTag  { get; private set; }
@@ -63,7 +65,8 @@ public class BotStat
     public BotStat(float MaxHP, 
                    float MoveSpeed, 
                    float ChaseSpeed, 
-                   float AttackRange, 
+                   float AttackRange,
+                   float AlertRange,
                    float ViewRange,
                    int LayerMask,
                    string FriendTag,
@@ -74,6 +77,7 @@ public class BotStat
         this.MoveSpeed   = MoveSpeed;
         this.ChaseSpeed  = ChaseSpeed;
         this.AttackRange = AttackRange;
+        this.AlertRange  = AlertRange;
         this.ViewRange   = ViewRange;
         this.LayerMask   = LayerMask;
         this.FriendTag   = FriendTag;
