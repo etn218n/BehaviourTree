@@ -1,20 +1,48 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public enum Clan { Red, Blue }
+
 public class Bot : MonoBehaviour
 {
     [SerializeField] private Transform   aim;
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Image       healthBar;
     [SerializeField] private GameObject  bullet;
+    [SerializeField] private Clan        clan;
 
     private INode root;
     private BotContext botCtx;
     private BotStat stat;
 
+    private int layerMask = 0;
+
     private void Awake()
     {
-        stat = new BotStat(MaxHP: 100f, MoveSpeed: 100f, ChaseSpeed: 150f, AttackRange: 2f, ViewRange: 4f);
+        layerMask = layerMask |= (1 << LayerMask.NameToLayer("Bot"));
+        layerMask = layerMask |= (1 << LayerMask.NameToLayer("WorldObject"));
+
+        switch (clan)
+        {
+            case Clan.Red:  stat = new BotStat(MaxHP: 100f, 
+                                               MoveSpeed: 100f, 
+                                               ChaseSpeed: 150f, 
+                                               AttackRange: 2f, 
+                                               ViewRange: 4f,
+                                               LayerMask: layerMask,
+                                               FriendTag: "Red",
+                                               EnemyTag: "Blue"); break;
+
+            case Clan.Blue: stat = new BotStat(MaxHP: 100f,
+                                               MoveSpeed: 100f,
+                                               ChaseSpeed: 150f,
+                                               AttackRange: 2f,
+                                               ViewRange: 4f,
+                                               LayerMask: layerMask,
+                                               FriendTag: "Blue",
+                                               EnemyTag: "Red"); break;
+        }
+
 
         botCtx = new BotContext(stat,
                                 GetComponent<Rigidbody2D>(),
@@ -64,7 +92,10 @@ public class Bot : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        stat.HP -= 5f;
+        if (collision.gameObject.tag == "Bullet")
+        {
+            botCtx.stat.HP -= 5;
+        }
     }
 
     private void UpdateHealthBar(System.Object sender, System.EventArgs eventArgs)

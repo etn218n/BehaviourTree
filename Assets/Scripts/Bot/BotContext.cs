@@ -55,7 +55,19 @@ public class BotStat
     public float AttackRange { get; private set; }
     public float ViewRange   { get; private set; }
 
-    public BotStat(float MaxHP, float MoveSpeed, float ChaseSpeed, float AttackRange, float ViewRange)
+    public string FriendTag  { get; private set; }
+    public string EnemyTag   { get; private set; }
+
+    public int LayerMask     { get; private set; }
+
+    public BotStat(float MaxHP, 
+                   float MoveSpeed, 
+                   float ChaseSpeed, 
+                   float AttackRange, 
+                   float ViewRange,
+                   int LayerMask,
+                   string FriendTag,
+                   string EnemyTag)
     {
         this.MaxHP       = MaxHP;
         this.hp          = MaxHP;
@@ -63,5 +75,8 @@ public class BotStat
         this.ChaseSpeed  = ChaseSpeed;
         this.AttackRange = AttackRange;
         this.ViewRange   = ViewRange;
+        this.LayerMask   = LayerMask;
+        this.FriendTag   = FriendTag;
+        this.EnemyTag    = EnemyTag;
     }
 }

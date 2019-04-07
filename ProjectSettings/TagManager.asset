@@ -11,6 +11,7 @@ TagManager:
   - Sight
   - Bot
   - Red
+  - Blue
   layers:
   - Default
   - TransparentFX

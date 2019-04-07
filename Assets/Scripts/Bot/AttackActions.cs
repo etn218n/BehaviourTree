@@ -2,21 +2,19 @@
 
 public class TargetSighted : Leaf<BotContext>
 {
-    private int layerMask = 0;
-
-    public TargetSighted(BotContext ctx) : base(ctx)
-    {
-        layerMask |= (1 << LayerMask.NameToLayer("Bot"));
-    }
+    public TargetSighted(BotContext ctx) : base(ctx) { }
 
     public override NodeStatus Tick()
     {
-        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, context.stat.LayerMask);
 
         if (hit.collider != null)
         {
-            context.target = hit.collider.transform;
-            return NodeStatus.Sucess;
+            if (hit.collider.tag == context.stat.EnemyTag)
+            {
+                context.target = hit.collider.transform;
+                return NodeStatus.Sucess;
+            }
         } 
 
         return NodeStatus.Failure;
@@ -79,9 +77,13 @@ public class AttackTarget : Leaf<BotContext>
         context.rb2d.velocity = Vector2.zero;
 
         GameObject newBullet = GameObject.Instantiate(context.bullet);
+
         newBullet.transform.position = context.aim.position;
-        newBullet.transform.right = context.transform.up;
-        newBullet.GetComponent<Rigidbody2D>().AddForce(context.transform.up * 20f, ForceMode2D.Impulse);
+        newBullet.transform.right    = context.transform.up;
+
+        Vector3 shootDir = new Vector3(Random.Range(-1f, 1f), 0f, 0f) + context.transform.up;
+
+        newBullet.GetComponent<Rigidbody2D>().AddForce(shootDir * 20f, ForceMode2D.Impulse);
 
         return NodeStatus.Sucess;
     }

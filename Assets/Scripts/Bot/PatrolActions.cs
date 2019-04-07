@@ -66,20 +66,18 @@ public class MoveToDestination : Leaf<BotContext>
 
 public class IfPathObstructed : Leaf<BotContext>
 {
-    private int layerMask = 0;
-
-    public IfPathObstructed(BotContext ctx) : base(ctx)
-    {
-        layerMask |= (1 << LayerMask.NameToLayer("WorldObject"));
-    }
+    public IfPathObstructed(BotContext ctx) : base(ctx) { }
 
     public override NodeStatus Tick()
     {
-        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, context.stat.LayerMask);
 
         if (hit.collider != null)
         {
-            return NodeStatus.Sucess;
+            if (hit.collider.tag == "WorldObject")
+                return NodeStatus.Sucess;
+            else if (hit.collider.tag == context.stat.FriendTag)
+                return NodeStatus.Sucess;
         }
 
         return NodeStatus.Failure;
