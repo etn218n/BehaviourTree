@@ -27,7 +27,7 @@ public class Bot : MonoBehaviour
             case Clan.Red:  stat = new BotStat(MaxHP: 100f, 
                                                MoveSpeed: 100f, 
                                                ChaseSpeed: 150f, 
-                                               AttackRange: 2f, 
+                                               AttackRange: 3f, 
                                                ViewRange: 4f,
                                                LayerMask: layerMask,
                                                FriendTag: "Red",
@@ -36,7 +36,7 @@ public class Bot : MonoBehaviour
             case Clan.Blue: stat = new BotStat(MaxHP: 100f,
                                                MoveSpeed: 100f,
                                                ChaseSpeed: 150f,
-                                               AttackRange: 2f,
+                                               AttackRange: 3f,
                                                ViewRange: 4f,
                                                LayerMask: layerMask,
                                                FriendTag: "Blue",
@@ -61,7 +61,8 @@ public class Bot : MonoBehaviour
                      new Sequence(new TargetSighted(botCtx),
                                   new SteerAtTarget(botCtx),
                                   new Selector(new Sequence(new InAttackRange(botCtx),
-                                                            new AttackTarget(botCtx)),
+                                                            new AttackTarget(botCtx),
+                                                            new MoveWhileAttacking(botCtx)),
                                                new ChaseTarget(botCtx))),
 
                              new Selector(new Sequence(new Selector(new IfPathObstructed(botCtx),
@@ -71,18 +72,6 @@ public class Bot : MonoBehaviour
 
                                           new Sequence(new SteerAtDestination(botCtx),
                                                        new MoveToDestination(botCtx))));
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            stat.HP -= 5f;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            stat.HP += 5f;
-        }
     }
 
     private void FixedUpdate()

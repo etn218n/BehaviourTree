@@ -88,3 +88,15 @@ public class AttackTarget : Leaf<BotContext>
         return NodeStatus.Sucess;
     }
 }
+
+public class MoveWhileAttacking : Leaf<BotContext>
+{
+    public MoveWhileAttacking(BotContext ctx) : base(ctx) { }
+
+    public override NodeStatus Tick()
+    {
+        context.rb2d.velocity = context.transform.right * 100f * Time.fixedDeltaTime;
+
+        return NodeStatus.Sucess;
+    }
+}
