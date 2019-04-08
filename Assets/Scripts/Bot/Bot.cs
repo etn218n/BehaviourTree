@@ -11,9 +11,12 @@ public class Bot : MonoBehaviour
     [SerializeField] private GameObject  bullet;
     [SerializeField] private Clan        clan;
 
+    [SerializeField] private SenseBehaviour senseBehaviour;
+
     private INode root;
     private BotContext botCtx;
-    private BotStat stat;
+    private BotStat    stat;
+    private BotSense   sense;
 
     private int layerMask = 0;
 
@@ -22,13 +25,18 @@ public class Bot : MonoBehaviour
         layerMask = layerMask |= (1 << LayerMask.NameToLayer("Bot"));
         layerMask = layerMask |= (1 << LayerMask.NameToLayer("WorldObject"));
 
+        sense = new BotSense();
+
+        senseBehaviour.sense = sense;
+
         switch (clan)
         {
             case Clan.Red:  stat = new BotStat(MaxHP: 100f, 
                                                MoveSpeed: 100f, 
                                                ChaseSpeed: 150f, 
+                                               FleeSpeed: 175f,
                                                AttackRange: 3f, 
-                                               AlertRange: 5f,
+                                               DetectionRange: 5f,
                                                ViewRange: 2f,
                                                LayerMask: layerMask,
                                                FriendTag: "Red",
@@ -37,8 +45,9 @@ public class Bot : MonoBehaviour
             case Clan.Blue: stat = new BotStat(MaxHP: 100f,
                                                MoveSpeed: 100f,
                                                ChaseSpeed: 150f,
+                                               FleeSpeed: 175f,
                                                AttackRange: 3f,
-                                               AlertRange: 5f,
+                                               DetectionRange: 5f,
                                                ViewRange: 2f,
                                                LayerMask: layerMask,
                                                FriendTag: "Blue",
@@ -47,6 +56,7 @@ public class Bot : MonoBehaviour
 
 
         botCtx = new BotContext(stat,
+                                sense,
                                 GetComponent<Rigidbody2D>(),
                                 GetComponent<Transform>(),
                                 aim,
@@ -67,13 +77,16 @@ public class Bot : MonoBehaviour
                                                             new MoveWhileAttacking(botCtx)),
                                                new ChaseTarget(botCtx))),
 
-                             new Selector(new Sequence(new Selector(new IfPathObstructed(botCtx),
-                                                                    new IfReachDestination(botCtx)),
-                                                       new FindNextDestination(botCtx),
-                                                       new SteerAtDestination(botCtx)),
+                     new Selector(new Sequence(new Selector(new IfPathObstructed(botCtx),
+                                                            new IfReachDestination(botCtx)),
+                                               new FindNextDestination(botCtx),
+                                               new SteerAtDestination(botCtx)),
 
-                                          new Sequence(new SteerAtDestination(botCtx),
-                                                       new MoveToDestination(botCtx))));
+                                  new Selector(new Sequence(new IfUnderAttack(botCtx),
+                                                            new Flee(botCtx)),
+
+                                               new Sequence(new SteerAtDestination(botCtx),
+                                                            new MoveToDestination(botCtx)))));
     }
 
     private void FixedUpdate()
@@ -86,6 +99,7 @@ public class Bot : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             botCtx.stat.HP -= 5;
+            botCtx.sense.IsUnderAttack = true;
         }
     }
 

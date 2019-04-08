@@ -9,14 +9,18 @@ public class BotContext
     public Transform transform      { get; private set; }
     public Transform aim            { get; private set; }
     public Rigidbody2D rb2d         { get; private set; }
-    public BotStat stat             { get; private set; }
+
+    public BotStat  stat            { get; private set; }
+    public BotSense sense           { get; private set; }
 
     public GameObject bullet { get; private set; }
 
     public Transform nextPoint { get; set; }
     public Transform target    { get; set; }
+    
 
     public BotContext(BotStat stat,
+                      BotSense sense,
                       Rigidbody2D rb2d,
                       Transform transform,
                       Transform aim,
@@ -24,6 +28,7 @@ public class BotContext
                       GameObject bullet)
     {
         this.stat         = stat;
+        this.sense        = sense;
         this.rb2d         = rb2d;
         this.transform    = transform;
         this.aim          = aim;
@@ -50,12 +55,15 @@ public class BotStat
         }
     }
 
-    public float MaxHP       { get; private set; }
-    public float MoveSpeed   { get; private set; }
-    public float ChaseSpeed  { get; private set; }
-    public float AttackRange { get; private set; }
-    public float AlertRange  { get; private set; }
-    public float ViewRange   { get; private set; }
+    public float MaxHP          { get; private set; }
+
+    public float MoveSpeed      { get; private set; }
+    public float ChaseSpeed     { get; private set; }
+    public float FleeSpeed      { get; private set; }
+
+    public float AttackRange    { get; private set; }
+    public float DetectionRange { get; private set; }
+    public float ViewRange      { get; private set; }
 
     public string FriendTag  { get; private set; }
     public string EnemyTag   { get; private set; }
@@ -65,22 +73,30 @@ public class BotStat
     public BotStat(float MaxHP, 
                    float MoveSpeed, 
                    float ChaseSpeed, 
+                   float FleeSpeed,
                    float AttackRange,
-                   float AlertRange,
+                   float DetectionRange,
                    float ViewRange,
                    int LayerMask,
                    string FriendTag,
                    string EnemyTag)
     {
-        this.MaxHP       = MaxHP;
-        this.hp          = MaxHP;
-        this.MoveSpeed   = MoveSpeed;
-        this.ChaseSpeed  = ChaseSpeed;
-        this.AttackRange = AttackRange;
-        this.AlertRange  = AlertRange;
-        this.ViewRange   = ViewRange;
-        this.LayerMask   = LayerMask;
-        this.FriendTag   = FriendTag;
-        this.EnemyTag    = EnemyTag;
+        this.MaxHP          = MaxHP;
+        this.hp             = MaxHP;
+        this.MoveSpeed      = MoveSpeed;
+        this.ChaseSpeed     = ChaseSpeed;
+        this.FleeSpeed      = FleeSpeed;
+        this.AttackRange    = AttackRange;
+        this.DetectionRange = DetectionRange;
+        this.ViewRange      = ViewRange;
+        this.LayerMask      = LayerMask;
+        this.FriendTag      = FriendTag;
+        this.EnemyTag       = EnemyTag;
     }
+}
+
+[Serializable]
+public class BotSense
+{
+    public bool IsUnderAttack;
 }

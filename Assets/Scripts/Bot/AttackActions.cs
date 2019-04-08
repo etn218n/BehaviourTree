@@ -6,7 +6,7 @@ public class TargetSighted : Leaf<BotContext>
 
     public override NodeStatus Tick()
     {
-        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.AlertRange, context.stat.LayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.DetectionRange, context.stat.LayerMask);
 
         if (hit.collider != null)
         {
