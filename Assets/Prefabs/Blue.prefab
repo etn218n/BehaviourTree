@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1300441610798398496
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6753581789830857921}
-  m_Layer: 11
-  m_Name: AimPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6753581789830857921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300441610798398496}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.84, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7849855169070083381}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4264282894464989791
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7849855169070083381}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &8430427610749160784
 CircleCollider2D:
@@ -92,6 +62,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sense:
     IsUnderAttack: 0
+--- !u!1 &7177472139907589472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3346592943909131266}
+  m_Layer: 0
+  m_Name: Aim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3346592943909131266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7177472139907589472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7849855170164202231}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7849855168636013664
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +298,6 @@ Transform:
   m_Children:
   - {fileID: 7849855168636013665}
   - {fileID: 7849855170164202231}
-  - {fileID: 6753581789830857921}
   - {fileID: 7259278939042941820}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -400,11 +399,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee2d50ba0e7ea04ab9c4c3c0e3fde6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aim: {fileID: 6753581789830857921}
   patrolPoints: []
+  aim: {fileID: 3346592943909131266}
   healthBar: {fileID: 7849855168895851640}
-  bullet: {fileID: 4842586745447698087, guid: df17182d1f1d7234894708068a83fbdb, type: 3}
   clan: 1
+  weapon: {fileID: 7712045081675258785, guid: 8dcbf74f47efbac4e96c10a74d634360, type: 3}
   senseBehaviour: {fileID: 6329297963512237470}
 --- !u!1 &7849855170164202185
 GameObject:
@@ -433,7 +432,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.48571426, z: 0}
   m_LocalScale: {x: 1.4285713, y: 1.4285713, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3346592943909131266}
   m_Father: {fileID: 7849855169070083381}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

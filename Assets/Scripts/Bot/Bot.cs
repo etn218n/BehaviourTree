@@ -5,15 +5,15 @@ public enum Clan { Red, Blue }
 
 public class Bot : MonoBehaviour
 {
-    [SerializeField] private Transform   aim;
     [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private Transform   aim;
     [SerializeField] private Image       healthBar;
-    [SerializeField] private GameObject  bullet;
     [SerializeField] private Clan        clan;
+    [SerializeField] private Weapon      weapon;
 
     [SerializeField] private SenseBehaviour senseBehaviour;
 
-    private INode root;
+    private INode      root;
     private BotContext botCtx;
     private BotStat    stat;
     private BotSense   sense;
@@ -54,6 +54,7 @@ public class Bot : MonoBehaviour
                                                EnemyTag: "Red"); break;
         }
 
+        weapon = GameObject.Instantiate(weapon, aim.transform, false);
 
         botCtx = new BotContext(stat,
                                 sense,
@@ -61,7 +62,7 @@ public class Bot : MonoBehaviour
                                 GetComponent<Transform>(),
                                 aim,
                                 patrolPoints,
-                                bullet);
+                                weapon);
 
         botCtx.stat.HpChanged += UpdateHealthBar;
         botCtx.stat.HpChanged += HPDepleted;
@@ -82,8 +83,8 @@ public class Bot : MonoBehaviour
                                                new FindNextDestination(botCtx),
                                                new SteerAtDestination(botCtx)),
 
-                                  new Selector(new Sequence(new IfUnderAttack(botCtx),
-                                                            new Flee(botCtx)),
+                                  new Selector(//new Sequence(new IfUnderAttack(botCtx),
+                                               //             new Flee(botCtx)),
 
                                                new Sequence(new SteerAtDestination(botCtx),
                                                             new MoveToDestination(botCtx)))));
@@ -111,6 +112,8 @@ public class Bot : MonoBehaviour
     private void HPDepleted(System.Object sender, System.EventArgs eventArgs)
     {
         if (botCtx.stat.HP <= 0)
+        {
             Destroy(this.gameObject);
+        }
     }
 }

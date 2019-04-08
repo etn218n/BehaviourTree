@@ -13,11 +13,9 @@ public class BotContext
     public BotStat  stat            { get; private set; }
     public BotSense sense           { get; private set; }
 
-    public GameObject bullet { get; private set; }
-
     public Transform nextPoint { get; set; }
     public Transform target    { get; set; }
-    
+    public Weapon    weapon    { get; set; }
 
     public BotContext(BotStat stat,
                       BotSense sense,
@@ -25,7 +23,7 @@ public class BotContext
                       Transform transform,
                       Transform aim,
                       Transform[] patrolPoints,
-                      GameObject bullet)
+                      Weapon weapon)
     {
         this.stat         = stat;
         this.sense        = sense;
@@ -33,7 +31,7 @@ public class BotContext
         this.transform    = transform;
         this.aim          = aim;
         this.patrolPoints = patrolPoints;
-        this.bullet       = bullet;
+        this.weapon       = weapon;
     }
 }
 
