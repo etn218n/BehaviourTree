@@ -2,16 +2,26 @@
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject victim;
+    [SerializeField] private GameObject Red;
+    [SerializeField] private GameObject Blue;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
-            Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            spawnPosition.z = 0f;
-
-            GameObject.Instantiate(victim, spawnPosition, Quaternion.identity, null);
+            Spawn(Red);
         }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            Spawn(Blue);
+        }
+    }
+
+    private void Spawn(GameObject bot)
+    {
+        Vector3 spawnPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        spawnPosition.z = 0f;
+
+        GameObject.Instantiate(bot, spawnPosition, Quaternion.identity, null);
     }
 }
