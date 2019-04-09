@@ -13,9 +13,9 @@ public class TargetSighted : Leaf<BotContext>
 
     public override NodeStatus Tick()
     {
-        RaycastHit2D hit  = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.DetectionRange, context.stat.LayerMask);
-        RaycastHit2D hit2 = Physics2D.Raycast(context.aim.position, context.transform.up + offset2, context.stat.DetectionRange, context.stat.LayerMask);
-        RaycastHit2D hit3 = Physics2D.Raycast(context.aim.position, context.transform.up + offset3, context.stat.DetectionRange, context.stat.LayerMask);
+        //RaycastHit2D hit  = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.DetectionRange, context.stat.LayerMask);
+
+        RaycastHit2D hit = Physics2D.CircleCast(context.aim.position, 0.2f, context.aim.up, context.stat.DetectionRange, context.stat.LayerMask);
 
 
         if (hit.collider != null)
@@ -23,24 +23,6 @@ public class TargetSighted : Leaf<BotContext>
             if (hit.collider.tag == context.stat.EnemyTag)
             {
                 context.target = hit.collider.transform;
-                return NodeStatus.Sucess;
-            }
-        }
-
-        if (hit2.collider != null)
-        {
-            if (hit2.collider.tag == context.stat.EnemyTag)
-            {
-                context.target = hit2.collider.transform;
-                return NodeStatus.Sucess;
-            }
-        }
-
-        if (hit3.collider != null)
-        {
-            if (hit3.collider.tag == context.stat.EnemyTag)
-            {
-                context.target = hit3.collider.transform;
                 return NodeStatus.Sucess;
             }
         }
@@ -102,17 +84,7 @@ public class AttackTarget : Leaf<BotContext>
 
     public override NodeStatus Tick()
     {
-        //GameObject newBullet = GameObject.Instantiate(context.bullet);
-
-        //newBullet.transform.position = context.aim.position;
-        //newBullet.transform.right    = context.transform.up;
-
-        ////TODO: implement Weapon interface
-        //Vector3 shootDir = new Vector3(Random.Range(-1f, 1f), 0f, 0f) + context.transform.up;
-
-        //newBullet.GetComponent<Rigidbody2D>().AddForce(shootDir * 20f, ForceMode2D.Impulse);
-
-        context.weapon.Execute();
+        context.weapon.Handle();
 
         return NodeStatus.Sucess;
     }
