@@ -7,7 +7,6 @@ TagManager:
   - WorldObject
   - Target
   - Bullet
-  - AI
   - Sight
   - Bot
   - Red
@@ -23,8 +22,8 @@ TagManager:
   - 
   - Player
   - WorldObject
-  - AI
   - Bot
+  - Node
   - 
   - 
   - 

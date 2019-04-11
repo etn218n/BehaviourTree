@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public enum Clan { Red, Blue }
+public enum Clan { None, Red, Blue }
 
 public class Bot : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class Bot : MonoBehaviour
 
     private void Awake()
     {
-        layerMask = layerMask |= (1 << LayerMask.NameToLayer("Bot"));
+        layerMask = layerMask |= (1 << LayerMask.NameToLayer("Node"));
         layerMask = layerMask |= (1 << LayerMask.NameToLayer("WorldObject"));
 
         sense = new BotSense();

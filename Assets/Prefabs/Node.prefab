@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9528302, g: 0.4000089, b: 0.4000089, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -277,10 +277,9 @@ GameObject:
   - component: {fileID: 7849855169070083380}
   - component: {fileID: 7849855169070083383}
   - component: {fileID: 7849855169070083378}
-  - component: {fileID: 7849855169070083379}
   m_Layer: 11
-  m_Name: Red
-  m_TagString: Red
+  m_Name: Node
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,24 +386,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7849855169070083379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7849855169070083382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee2d50ba0e7ea04ab9c4c3c0e3fde6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoints: []
-  aim: {fileID: 7093215233054518043}
-  healthBar: {fileID: 7849855168895851640}
-  clan: 0
-  weapon: {fileID: 7712045081675258785, guid: 8dcbf74f47efbac4e96c10a74d634360, type: 3}
-  senseBehaviour: {fileID: 842496841242646109}
 --- !u!1 &7849855170164202185
 GameObject:
   m_ObjectHideFlags: 0
