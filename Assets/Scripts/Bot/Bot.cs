@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum Clan { Red, Blue }
 
@@ -31,16 +32,18 @@ public class Bot : MonoBehaviour
 
         switch (clan)
         {
-            case Clan.Red:  stat = new BotStat(MaxHP: 100f, 
-                                               MoveSpeed: 100f, 
-                                               ChaseSpeed: 150f, 
+            case Clan.Red:  stat = new BotStat(MaxHP: 100f,
+                                               MoveSpeed: 100f,
+                                               ChaseSpeed: 150f,
                                                FleeSpeed: 175f,
-                                               AttackRange: 3f, 
+                                               AttackRange: 3f,
                                                DetectionRange: 5f,
                                                ViewRange: 2f,
                                                LayerMask: layerMask,
-                                               FriendTag: "Red",
-                                               EnemyTag: "Blue"); break;
+                                               FriendTags:   new List<string>  { "Red" },
+                                               EnemyTags:    new List<string>  { "Blue"},
+                                               ObstacleTags: new List<string>  { "WorldObject", "Red" });
+                                               break;
 
             case Clan.Blue: stat = new BotStat(MaxHP: 100f,
                                                MoveSpeed: 100f,
@@ -50,8 +53,10 @@ public class Bot : MonoBehaviour
                                                DetectionRange: 5f,
                                                ViewRange: 2f,
                                                LayerMask: layerMask,
-                                               FriendTag: "Blue",
-                                               EnemyTag: "Red"); break;
+                                               FriendTags:   new List<string> { "Blue" },
+                                               EnemyTags:    new List<string> { "Red"  },
+                                               ObstacleTags: new List<string> { "WorldObject", "Blue" });
+                                               break;
         }
 
         weapon = GameObject.Instantiate(weapon, aim.transform, false);

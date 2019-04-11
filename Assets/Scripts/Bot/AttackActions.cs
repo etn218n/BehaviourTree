@@ -2,14 +2,7 @@
 
 public class TargetSighted : Leaf<BotContext>
 {
-    private Vector3 offset2;
-    private Vector3 offset3;
-
-    public TargetSighted(BotContext ctx) : base(ctx)
-    {
-        offset2 = new Vector3( 1f, 0f, 0f);
-        offset3 = new Vector3(-1f, 0f, 0f);
-    }
+    public TargetSighted(BotContext ctx) : base(ctx) { }
 
     public override NodeStatus Tick()
     {
@@ -20,10 +13,13 @@ public class TargetSighted : Leaf<BotContext>
 
         if (hit.collider != null)
         {
-            if (hit.collider.tag == context.stat.EnemyTag)
+            foreach (string tag in context.stat.EnemyTags)
             {
-                context.target = hit.collider.transform;
-                return NodeStatus.Sucess;
+                if (hit.collider.tag == tag)
+                {
+                    context.target = hit.collider.transform;
+                    return NodeStatus.Sucess;
+                }
             }
         }
 

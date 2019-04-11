@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 //TODO: better implementation
 [Serializable]
 public class BotContext
 {
     public Transform[] patrolPoints { get; private set; }
-    public Transform transform      { get; private set; }
-    public Transform aim            { get; private set; }
+    public Transform   transform    { get; private set; }
+    public Transform   aim          { get; private set; }
     public Rigidbody2D rb2d         { get; private set; }
 
     public BotStat  stat            { get; private set; }
@@ -63,8 +64,9 @@ public class BotStat
     public float DetectionRange { get; private set; }
     public float ViewRange      { get; private set; }
 
-    public string FriendTag  { get; private set; }
-    public string EnemyTag   { get; private set; }
+    public HashSet<string> FriendTags   { get; private set; }
+    public HashSet<string> EnemyTags    { get; private set; }
+    public HashSet<string> ObstacleTags { get; private set; }
 
     public int LayerMask     { get; private set; }
 
@@ -76,8 +78,9 @@ public class BotStat
                    float DetectionRange,
                    float ViewRange,
                    int LayerMask,
-                   string FriendTag,
-                   string EnemyTag)
+                   IEnumerable<string> FriendTags,
+                   IEnumerable<string> EnemyTags,
+                   IEnumerable<string> ObstacleTags)
     {
         this.MaxHP          = MaxHP;
         this.hp             = MaxHP;
@@ -88,8 +91,20 @@ public class BotStat
         this.DetectionRange = DetectionRange;
         this.ViewRange      = ViewRange;
         this.LayerMask      = LayerMask;
-        this.FriendTag      = FriendTag;
-        this.EnemyTag       = EnemyTag;
+
+
+        this.FriendTags   = new HashSet<string>();
+        this.EnemyTags    = new HashSet<string>();
+        this.ObstacleTags = new HashSet<string>();
+
+        foreach (string tag in FriendTags)
+            this.FriendTags.Add(tag);
+
+        foreach (string tag in EnemyTags)
+            this.EnemyTags.Add(tag);
+
+        foreach (string tag in ObstacleTags)
+            this.ObstacleTags.Add(tag);
     }
 }
 

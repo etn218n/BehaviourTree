@@ -74,10 +74,13 @@ public class IfPathObstructed : Leaf<BotContext>
 
         if (hit.collider != null)
         {
-            if (hit.collider.tag == "WorldObject")
-                return NodeStatus.Sucess;
-            else if (hit.collider.tag == context.stat.FriendTag)
-                return NodeStatus.Sucess;
+            foreach (string tag in context.stat.ObstacleTags)
+            {
+                if (hit.collider.tag == tag)
+                {
+                    return NodeStatus.Sucess;
+                }
+            }
         }
 
         return NodeStatus.Failure;
