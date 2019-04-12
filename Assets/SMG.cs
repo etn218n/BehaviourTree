@@ -2,10 +2,30 @@
 
 public class SMG : Weapon
 {
-    [SerializeField] private Bullet bullet;
-    public Transform barrel;
+    [SerializeField] private Bullet    bullet;
+    [SerializeField] private Transform barrel;
+
+    [SerializeField] private float FireRate = 10f;
+
+    private float previousTime;
+
+    private float interval;
+
+    private void Awake()
+    {
+        interval = 1 / FireRate;
+    }
 
     public override void Handle()
+    {
+        if (Time.time - previousTime > interval)
+        {
+            Fire();
+            previousTime = Time.time;
+        }
+    }
+
+    private void Fire()
     {
         Bullet newBullet = GameObject.Instantiate(bullet);
 

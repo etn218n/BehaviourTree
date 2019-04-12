@@ -23,11 +23,6 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -40,15 +35,10 @@ public class Player : MonoBehaviour
 
         rb2d.velocity = new Vector2(x, y).normalized * 100f * Time.fixedDeltaTime;
 
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             weapon.Handle();
         }
-    }
-
-    private void FixedUpdate()
-    {
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
