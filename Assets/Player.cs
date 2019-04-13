@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
         weapon = GameObject.Instantiate(weapon, aim.transform, false);
 
         rb2d = GetComponent<Rigidbody2D>();
@@ -45,7 +44,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            HP -= 5f;
+            HP -= collision.gameObject.GetComponent<Bullet>().damage;
 
             UpdateHealthBar();
             HPDepleted();

@@ -104,7 +104,7 @@ public class Bot : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            botCtx.stat.HP -= 5;
+            botCtx.stat.HP -= collision.gameObject.GetComponent<Bullet>().damage;
             botCtx.sense.IsUnderAttack = true;
         }
     }
