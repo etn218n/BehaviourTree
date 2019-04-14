@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public readonly float damage = 10f;
-    
 
     void Start()
     {
@@ -21,6 +20,16 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Bullet")
+            return;
+
+        IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+
+        if (damagable != null)
+        {
+            damagable.DamagedBy(this);
+        }
+
         StartCoroutine(Timer(0.2f));
     }
 }

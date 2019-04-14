@@ -34,6 +34,6 @@ public class SMG : Weapon
 
         Vector3 shootDir = new Vector3(Random.Range(-0.5f, 0.5f), 0f, 0f) + barrel.up;
 
-        newBullet.GetComponent<Rigidbody2D>().AddForce(shootDir * 20f, ForceMode2D.Impulse);
+        newBullet.GetComponent<Rigidbody2D>().AddForce(shootDir * 30f, ForceMode2D.Impulse);
     }
 }

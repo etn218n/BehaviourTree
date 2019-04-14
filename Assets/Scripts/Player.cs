@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour, IHealthGauge
+public class Player : MonoBehaviour, IHealthGauge, IDamagable
 {
     [SerializeField] private Transform aim;
     [SerializeField] private Weapon weapon;
@@ -40,14 +40,6 @@ public class Player : MonoBehaviour, IHealthGauge
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Bullet")
-        {
-            health.DecreaseBy(collision.gameObject.GetComponent<Bullet>().damage);
-        }
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Bullet")
@@ -59,5 +51,10 @@ public class Player : MonoBehaviour, IHealthGauge
     public Health GetHealth()
     {
         return this.health;
+    }
+
+    public void DamagedBy(System.Object dealer)
+    {
+        health.DecreaseBy((dealer as Bullet).damage);
     }
 }

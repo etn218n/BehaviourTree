@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum Clan { None, Red, Blue }
 
-public class Bot : MonoBehaviour, IHealthGauge
+public class Bot : MonoBehaviour, IHealthGauge, IDamagable
 {
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Transform   aim;
@@ -98,17 +98,14 @@ public class Bot : MonoBehaviour, IHealthGauge
         root.Tick();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Bullet")
-        {
-            botCtx.stat.Health.DecreaseBy(collision.gameObject.GetComponent<Bullet>().damage);
-            botCtx.sense.IsUnderAttack = true;
-        }
-    }
-
     public Health GetHealth()
     {
         return botCtx.stat.Health;
+    }
+
+    public void DamagedBy(System.Object dealer)
+    {
+        botCtx.stat.Health.DecreaseBy((dealer as Bullet).damage);
+        botCtx.sense.IsUnderAttack = true;
     }
 }
