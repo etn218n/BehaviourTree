@@ -4,7 +4,7 @@ using UnityEngine;
 // Object pooling system awaits :)
 public class Bullet : MonoBehaviour
 {
-    public readonly float damage = 50f;
+    public readonly float damage = 10f;
     
 
     void Start()

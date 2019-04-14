@@ -4,11 +4,10 @@ using System.Collections.Generic;
 
 public enum Clan { None, Red, Blue }
 
-public class Bot : MonoBehaviour
+public class Bot : MonoBehaviour, IHealthGauge
 {
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Transform   aim;
-    [SerializeField] private Image       healthBar;
     [SerializeField] private Clan        clan;
     [SerializeField] private Weapon      weapon;
 
@@ -69,8 +68,7 @@ public class Bot : MonoBehaviour
                                 patrolPoints,
                                 weapon);
 
-        botCtx.stat.HpChanged += UpdateHealthBar;
-        botCtx.stat.HpChanged += HPDepleted;
+        botCtx.stat.Health.OnDepleted += (System.Object sender, System.EventArgs eventArgs) => Destroy(this.gameObject);
     }
 
     private void Start()
@@ -104,21 +102,13 @@ public class Bot : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            botCtx.stat.HP -= collision.gameObject.GetComponent<Bullet>().damage;
+            botCtx.stat.Health.DecreaseBy(collision.gameObject.GetComponent<Bullet>().damage);
             botCtx.sense.IsUnderAttack = true;
         }
     }
 
-    private void UpdateHealthBar(System.Object sender, System.EventArgs eventArgs)
+    public Health GetHealth()
     {
-        healthBar.fillAmount = botCtx.stat.HP / botCtx.stat.MaxHP;
-    }
-
-    private void HPDepleted(System.Object sender, System.EventArgs eventArgs)
-    {
-        if (botCtx.stat.HP <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        return botCtx.stat.Health;
     }
 }

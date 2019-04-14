@@ -39,22 +39,7 @@ public class BotContext
 [Serializable]
 public class BotStat
 {
-    public EventHandler HpChanged;
-
-    private float hp;
-    public float HP
-    {
-        get => this.hp;
-
-        set
-        {
-            this.hp = value;
-
-            HpChanged?.Invoke(this, null);
-        }
-    }
-
-    public float MaxHP          { get; private set; }
+    public Health Health        { get; private set; }
 
     public float MoveSpeed      { get; private set; }
     public float ChaseSpeed     { get; private set; }
@@ -82,8 +67,8 @@ public class BotStat
                    IEnumerable<string> EnemyTags,
                    IEnumerable<string> ObstacleTags)
     {
-        this.MaxHP          = MaxHP;
-        this.hp             = MaxHP;
+        this.Health = new Health(MaxHP);
+
         this.MoveSpeed      = MoveSpeed;
         this.ChaseSpeed     = ChaseSpeed;
         this.FleeSpeed      = FleeSpeed;

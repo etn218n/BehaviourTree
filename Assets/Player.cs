@@ -2,16 +2,14 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHealthGauge
 {
     [SerializeField] private Transform aim;
-    [SerializeField] private Image healthBar;
     [SerializeField] private Weapon weapon;
 
     [SerializeField] private SenseBehaviour senseBehaviour;
 
-    private float MaxHP = 100f;
-    private float HP    = 100f;
+    private Health health = new Health(100f);
 
     private Rigidbody2D rb2d;
 
@@ -20,6 +18,8 @@ public class Player : MonoBehaviour
         weapon = GameObject.Instantiate(weapon, aim.transform, false);
 
         rb2d = GetComponent<Rigidbody2D>();
+
+        health.OnDepleted += (System.Object sender, System.EventArgs eventArgs) =>  Destroy(this.gameObject);
     }
 
     private void Update()
@@ -44,10 +44,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            HP -= collision.gameObject.GetComponent<Bullet>().damage;
-
-            UpdateHealthBar();
-            HPDepleted();
+            health.DecreaseBy(collision.gameObject.GetComponent<Bullet>().damage);
         }
     }
 
@@ -59,16 +56,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void UpdateHealthBar()
+    public Health GetHealth()
     {
-        healthBar.fillAmount = HP / MaxHP;
-    }
-
-    private void HPDepleted()
-    {
-        if (HP <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        return this.health;
     }
 }
