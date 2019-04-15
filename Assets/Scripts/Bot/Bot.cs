@@ -103,9 +103,9 @@ public class Bot : MonoBehaviour, IHealthGauge, IDamagable
         return botCtx.stat.Health;
     }
 
-    public void DamagedBy(System.Object dealer)
+    public void DamagedBy(IDamage dealer)
     {
-        botCtx.stat.Health.DecreaseBy((dealer as Bullet).damage);
+        botCtx.stat.Health.DecreaseBy(dealer.GetDamageInfo().damage);
         botCtx.sense.IsUnderAttack = true;
     }
 }

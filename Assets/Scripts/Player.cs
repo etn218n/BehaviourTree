@@ -53,8 +53,8 @@ public class Player : MonoBehaviour, IHealthGauge, IDamagable
         return this.health;
     }
 
-    public void DamagedBy(System.Object dealer)
+    public void DamagedBy(IDamage dealer)
     {
-        health.DecreaseBy((dealer as Bullet).damage);
+        health.DecreaseBy(dealer.GetDamageInfo().damage);
     }
 }

@@ -1,4 +1,4 @@
 ﻿public interface IDamagable
 {
-    void DamagedBy(System.Object dealer);
+    void DamagedBy(IDamage dealer);
 }

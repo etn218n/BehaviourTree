@@ -2,9 +2,9 @@
 using UnityEngine;
 
 // Object pooling system awaits :)
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IDamage
 {
-    public readonly float damage = 10f;
+    private DamageInfo damageInfo = new DamageInfo(10f);
 
     void Start()
     {
@@ -32,4 +32,6 @@ public class Bullet : MonoBehaviour
 
         StartCoroutine(Timer(0.2f));
     }
+
+    public DamageInfo GetDamageInfo() { return this.damageInfo; }
 }
