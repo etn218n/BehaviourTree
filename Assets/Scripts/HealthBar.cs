@@ -8,7 +8,11 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        health    = GetComponentInParent<IHealthGauge>().GetHealth();
+        IHealthGauge healthGauge = GetComponentInParent<IHealthGauge>();
+
+        if (healthGauge != null)
+            health = healthGauge.GetHealth();
+
         healthBar = GetComponent<Image>();
 
         if (health != null && healthBar != null)
