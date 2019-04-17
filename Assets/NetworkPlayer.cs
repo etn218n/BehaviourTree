@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkPlayer : NetworkBehaviour
+public class NetworkPlayer : NetworkBehaviour, IDamagable, IHealthGauge
 {
     [SerializeField] private Transform aim;
     [SerializeField] private Weapon weapon;
@@ -25,7 +23,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         rb2d = GetComponent<Rigidbody2D>();
 
-        //health.OnDepleted += (System.Object sender, System.EventArgs eventArgs) => Destroy(this.gameObject);
+        health.OnDepleted += (System.Object sender, System.EventArgs eventArgs) => Destroy(this.gameObject);
     }
 
     private void Update()
@@ -63,7 +61,7 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command] // TODO: fix the side-effect
     private void CmdSendNewState(Vector3 newPos, Vector3 up)
     {
         rb2d.MovePosition(newPos);
@@ -85,7 +83,7 @@ public class NetworkPlayer : NetworkBehaviour
         transform.up = syncRotation;
     }
 
-    [Command]
+    [Command] // This also pretends to sync the Health system but heavily relies on position sync of game world and bullets
     private void CmdFire()
     {
         weapon.Handle();
@@ -96,24 +94,27 @@ public class NetworkPlayer : NetworkBehaviour
     [ClientRpc]
     private void RpcFire()
     {
+        if (isLocalPlayer)
+            return;
+
         weapon.Handle();
     }
 
-    //private void OnCollisionStay2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Bullet")
-    //    {
-    //        rb2d.velocity = Vector2.zero;
-    //    }
-    //}
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            rb2d.velocity = Vector2.zero;
+        }
+    }
 
-    //public Health GetHealth()
-    //{
-    //    return this.health;
-    //}
+    public Health GetHealth()
+    {
+        return this.health;
+    }
 
-    //public void DamagedBy(IDamage dealer)
-    //{
-    //    health.DecreaseBy(dealer.GetDamageInfo().damage);
-    //}
+    public void DamagedBy(IDamage dealer)
+    {
+        health.DecreaseBy(dealer.GetDamageInfo().damage);
+    }
 }
