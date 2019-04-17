@@ -46,6 +46,13 @@ public class NetworkPlayer : NetworkBehaviour
         rb2d.MovePosition(newPos);
 
         CmdSendNewState(newPos, transform.up);
+
+        if (Input.GetMouseButton(0))
+        {
+            weapon.Handle();
+
+            CmdFire();
+        }
     }
 
     private void FixedUpdate()
@@ -76,6 +83,20 @@ public class NetworkPlayer : NetworkBehaviour
         rb2d.MovePosition(syncPosition);
 
         transform.up = syncRotation;
+    }
+
+    [Command]
+    private void CmdFire()
+    {
+        weapon.Handle();
+
+        RpcFire();
+    }
+
+    [ClientRpc]
+    private void RpcFire()
+    {
+        weapon.Handle();
     }
 
     //private void OnCollisionStay2D(Collision2D collision)
