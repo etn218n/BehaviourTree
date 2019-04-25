@@ -6,7 +6,6 @@ using System.Collections.Generic;
 [Serializable]
 public class BotContext
 {
-    public Transform[] patrolPoints { get; private set; }
     public Transform   transform    { get; private set; }
     public Transform   aim          { get; private set; }
     public Rigidbody2D rb2d         { get; private set; }
@@ -14,16 +13,18 @@ public class BotContext
     public BotStat  stat            { get; private set; }
     public BotSense sense           { get; private set; }
 
-    public Transform nextPoint { get; set; }
-    public Transform target    { get; set; }
-    public Weapon    weapon    { get; set; }
+    public Vector3     nextPoint    { get; set; }
+    public Transform   target       { get; set; }
+    public Weapon      weapon       { get; set; }
+
+    public PatrolPoints patrolPoints { get; private set; }
 
     public BotContext(BotStat stat,
                       BotSense sense,
                       Rigidbody2D rb2d,
                       Transform transform,
                       Transform aim,
-                      Transform[] patrolPoints,
+                      PatrolPoints patrolPoints,
                       Weapon weapon)
     {
         this.stat         = stat;

@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 public enum Clan { None, Red, Blue }
 
 public class Bot : MonoBehaviour, IHealthGauge, IDamagable
 {
-    [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Transform   aim;
     [SerializeField] private Clan        clan;
     [SerializeField] private Weapon      weapon;
@@ -65,7 +63,7 @@ public class Bot : MonoBehaviour, IHealthGauge, IDamagable
                                 GetComponent<Rigidbody2D>(),
                                 GetComponent<Transform>(),
                                 aim,
-                                patrolPoints,
+                                new PatrolPoints(5),
                                 weapon);
 
         botCtx.stat.Health.OnDepleted += (System.Object sender, System.EventArgs eventArgs) => Destroy(this.gameObject);
