@@ -7,8 +7,7 @@ public class SMG : Weapon
 
     [SerializeField] private float FireRate = 10f;
 
-    private float previousTime;
-
+    private float lastFireTime;
     private float intervalBetweenBullets;
 
     private void Awake()
@@ -18,10 +17,11 @@ public class SMG : Weapon
 
     public override void Handle()
     {
-        if (Time.time - previousTime > intervalBetweenBullets)
+        if (Time.time - lastFireTime > intervalBetweenBullets)
         {
             Fire();
-            previousTime = Time.time;
+
+            lastFireTime = Time.time;
         }
     }
 

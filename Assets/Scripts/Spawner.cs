@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-// Not usable at the moment :)
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject Red;
