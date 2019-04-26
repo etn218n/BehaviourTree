@@ -10,6 +10,7 @@ public class NetworkPlayer : NetworkBehaviour, IDamagable, IHealthGauge
 
     [SyncVar] private Vector3 syncPosition;
     [SyncVar] private Vector3 syncRotation;
+    [SyncVar] private float syncHealth;
 
     private float lerpRate = 11f;
 
@@ -22,6 +23,8 @@ public class NetworkPlayer : NetworkBehaviour, IDamagable, IHealthGauge
         weapon = GameObject.Instantiate(weapon, aim.transform, false);
 
         rb2d = GetComponent<Rigidbody2D>();
+
+        syncHealth = health.CurrentHP;
 
         health.OnDepleted += (System.Object sender, System.EventArgs eventArgs) => Destroy(this.gameObject);
     }
@@ -115,6 +118,17 @@ public class NetworkPlayer : NetworkBehaviour, IDamagable, IHealthGauge
 
     public void DamagedBy(IDamage dealer)
     {
+        if (!isServer)
+            return;
+
         health.DecreaseBy(dealer.GetDamageInfo().damage);
+
+        RpcUpdateHealth(health.CurrentHP);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateHealth(float hp)
+    {
+        health.SetCurrentHealth(hp);
     }
 }

@@ -35,7 +35,7 @@ public class SMG : Weapon
         newBullet.GetComponent<Bullet>().GetDamageInfo().ownerName = transform.root.name;
         newBullet.GetComponent<Bullet>().GetDamageInfo().ownerTag  = transform.root.tag;
 
-        // Temporarily turn off random spray pattern for deterministic physics
+        // Temporarily turn off random spray pattern for more deterministic physics
         //Vector3 shootDir = new Vector3(Random.Range(-0.5f, 0.5f), 0f, 0f) + barrel.up;
 
         Vector3 shootDir = new Vector3(0f, 0f, 0f) + barrel.up;

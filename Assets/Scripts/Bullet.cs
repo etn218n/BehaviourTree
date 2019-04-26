@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 // Object pooling system awaits :)
-public class Bullet : MonoBehaviour, IDamage
+public class Bullet : NetworkBehaviour, IDamage
 {
     private DamageInfo damageInfo = new DamageInfo(10f);
 

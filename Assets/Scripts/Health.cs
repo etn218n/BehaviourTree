@@ -40,4 +40,18 @@ public class Health
            
         OnChanged?.Invoke(this, null);
     }
+
+    public void SetCurrentHealth(float value)
+    {
+        this.CurrentHP = value;
+
+        OnChanged?.Invoke(this, null);
+
+        if (CurrentHP <= 0)
+        {
+            CurrentHP = 0f;
+
+            OnDepleted?.Invoke(this, null);
+        }
+    }
 }
