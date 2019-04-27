@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aim: {fileID: 3466405674303009284}
-  weapon: {fileID: 7712045081675258785, guid: 8dcbf74f47efbac4e96c10a74d634360, type: 3}
+  weapon: {fileID: 7003712446261232823, guid: 657527ac630fa574e8b53208ace432ea, type: 3}
   senseBehaviour: {fileID: 6474533996625137474}
 --- !u!114 &4079408419448886464
 MonoBehaviour:

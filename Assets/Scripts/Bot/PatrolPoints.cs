@@ -18,7 +18,7 @@ public class PatrolPoints
         for (int i = 0; i < nPoint; i++)
         {
             // Temporary value for testing
-            Points.Add(RandomizedPoint(-8f, 8f, -8f, 8f));
+            Points.Add(RandomizedPoint(-6f, 6f, -6f, 6f));
         }
     }
 

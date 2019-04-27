@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class SMG : Weapon
+public class NetworkSMG : Weapon
 {
     [SerializeField] private GameObject bullet;
-    [SerializeField] private Transform  barrel;
+    [SerializeField] private Transform barrel;
 
     [SerializeField] private float FireRate = 10f;
 
@@ -30,13 +30,15 @@ public class SMG : Weapon
         GameObject newBullet = GameObject.Instantiate(bullet);
 
         newBullet.transform.position = barrel.position;
-        newBullet.transform.right    = barrel.up;
+        newBullet.transform.right = barrel.up;
 
         newBullet.GetComponent<Bullet>().GetDamageInfo().ownerName = transform.root.name;
-        newBullet.GetComponent<Bullet>().GetDamageInfo().ownerTag  = transform.root.tag;
+        newBullet.GetComponent<Bullet>().GetDamageInfo().ownerTag = transform.root.tag;
 
-        // Random spray pattern
-        Vector3 shootDir = new Vector3(Random.Range(-0.4f, 0.4f), 0f, 0f) + barrel.up;
+        // Temporarily turn off random spray pattern for more deterministic physics
+        //Vector3 shootDir = new Vector3(Random.Range(-0.5f, 0.5f), 0f, 0f) + barrel.up;
+
+        Vector3 shootDir = new Vector3(0f, 0f, 0f) + barrel.up;
 
         newBullet.GetComponent<Rigidbody2D>().AddForce(shootDir * 20f, ForceMode2D.Impulse);
     }

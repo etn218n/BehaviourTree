@@ -61,6 +61,8 @@ public class IfPathObstructed : Leaf<BotContext>
     {
         RaycastHit2D hit = Physics2D.Raycast(context.aim.position, context.transform.up, context.stat.ViewRange, context.stat.LayerMask);
 
+        //RaycastHit2D hit = Physics2D.CircleCast(context.aim.position, 0.2f, context.aim.up, context.stat.ViewRange, context.stat.LayerMask);
+
         if (hit.collider != null)
         {
             foreach (string tag in context.stat.ObstacleTags)
