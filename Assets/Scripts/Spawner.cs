@@ -4,16 +4,21 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject Red;
     [SerializeField] private GameObject Blue;
+    [SerializeField] private GameObject Player;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
         {
             Spawn(Red);
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Spawn(Blue);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Spawn(Player);
         }
     }
 

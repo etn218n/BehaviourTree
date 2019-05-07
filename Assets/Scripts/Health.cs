@@ -53,5 +53,8 @@ public class Health
 
             OnDepleted?.Invoke(this, null);
         }
+
+        if (CurrentHP > MaxHP)
+            CurrentHP = MaxHP;
     }
 }

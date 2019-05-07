@@ -9,10 +9,10 @@ public class Bullet : NetworkBehaviour, IDamage
 
     void Start()
     {
-        StartCoroutine(Timer(2f));
+        StartCoroutine(Timer(5f));
     }
 
-    private IEnumerator Timer(float existenceDuration)
+    protected IEnumerator Timer(float existenceDuration)
     {
         yield return new WaitForSeconds(existenceDuration);
 
@@ -31,7 +31,7 @@ public class Bullet : NetworkBehaviour, IDamage
             damagable.DamagedBy(this);
         }
 
-        StartCoroutine(Timer(0.2f));
+        //StartCoroutine(Timer(0.2f));
     }
 
     public DamageInfo GetDamageInfo() { return this.damageInfo; }
